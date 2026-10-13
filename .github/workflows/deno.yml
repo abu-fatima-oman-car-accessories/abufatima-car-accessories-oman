@@ -20,11 +20,10 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          if find . -type f \( -name "*_test.ts" -o -name "*.test.ts" -o -name "*_test.js" -o -name "*.test.js" \) | grep -q .; then
-            echo "Deno test files found. Running tests..."
-            deno test -A
-          else
-            echo "No Deno test files found. Creating a basic sample test..."
+          TEST_FILES=$(find . -type f \( -name "*_test.ts" -o -name "*.test.ts" -o -name "*_test.js" -o -name "*.test.js" \) | sort)
+
+          if [ -z "$TEST_FILES" ]; then
+            echo "No Deno test files found. Creating sample test..."
             mkdir -p tests
             cat > tests/sample.test.ts <<'EOF'
             Deno.test("sample test", () => {
@@ -34,5 +33,9 @@ jobs:
               }
             });
             EOF
-            deno test -A tests
+            TEST_FILES="tests/sample.test.ts"
           fi
+
+          echo "Running tests:"
+          echo "$TEST_FILES"
+          deno test -A $TEST_FILES
