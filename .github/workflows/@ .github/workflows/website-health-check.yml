@@ -1,0 +1,37 @@
+
+name: ABU FATIMA Website Health Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required website files
+        run: |
+          set -eu
+
+          for file in index.html style.css script.js; do
+            if [ ! -s "$file" ]; then
+              echo "::error::Missing or empty website file: $file"
+              exit 1
+            fi
+          done
+
+          echo "Required website files exist."
+
+      - name: Check HTML entry point
+        run: |
+          grep -qi '<html' index.html
+          grep -qi '</html>' index.html
+          echo "Basic HTML check passed."
