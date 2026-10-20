@@ -1,0 +1,27 @@
+{
+  "name": "Abu Fatima Car Accessories Oman",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
+  "forwardPorts": [5500],
+  "portsAttributes": {
+    "5500": {
+      "label": "Website preview",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "ritwickdey.LiveServer",
+        "ms-vscode.vscode-json"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.eol": "\n",
+        "liveServer.settings.port": 5500
+      }
+    }
+  },
+  "postCreateCommand": "npm install -g http-server",
+  "remoteUser": "node"
+}
