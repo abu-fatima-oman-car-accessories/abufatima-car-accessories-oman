@@ -1,20 +1,27 @@
 {
-  "name": "abufatima-car-accessories-oman",
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  "features": {
-    "ghcr.io/devcontainers/features/deno:1": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "lts"
+  "name": "Abu Fatima Car Accessories Oman",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
+  "forwardPorts": [5500],
+  "portsAttributes": {
+    "5500": {
+      "label": "Website preview",
+      "onAutoForward": "openBrowser"
     }
   },
   "customizations": {
     "vscode": {
       "extensions": [
-        "denoland.vscode-deno"
-      ]
+        "esbenp.prettier-vscode",
+        "ritwickdey.LiveServer",
+        "ms-vscode.vscode-json"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.eol": "\n",
+        "liveServer.settings.port": 5500
+      }
     }
   },
-  "postCreateCommand": "deno --version"
+  "postCreateCommand": "npm install -g http-server",
+  "remoteUser": "node"
 }
