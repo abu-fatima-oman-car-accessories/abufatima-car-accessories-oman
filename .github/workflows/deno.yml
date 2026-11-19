@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Deno
         uses: denoland/setup-deno@v2
@@ -25,14 +25,7 @@ jobs:
           if [ -z "$TEST_FILES" ]; then
             echo "No Deno test files found. Creating sample test..."
             mkdir -p tests
-            cat > tests/sample.test.ts <<'EOF'
-            Deno.test("sample test", () => {
-              const value = 2 + 2;
-              if (value !== 4) {
-                throw new Error(`Expected 4, got ${value}`);
-              }
-            });
-            EOF
+            printf '%s\n' 'Deno.test("sample test", () => {' '  const value = 2 + 2;' '  if (value !== 4) {' '    throw new Error(`Expected 4, got ${value}`);' '  }' '});' > tests/sample.test.ts
             TEST_FILES="tests/sample.test.ts"
           fi
 
